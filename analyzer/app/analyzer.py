@@ -2,6 +2,12 @@ import re
 
 
 def analyze_code(code: str, language: str):
+    issues = run_rule_checks(code, language)
+
+    return issues
+
+def run_rule_checks(code: str, language: str):
+
     issues = []
 
     if language.lower() == "java":
@@ -13,7 +19,6 @@ def analyze_code(code: str, language: str):
                     "line": line_number,
                     "message": "Avoid using System.out.println() in production code."
                 })
-        pass
 
     if language.lower() == "python":
         # for Python
