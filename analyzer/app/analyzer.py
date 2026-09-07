@@ -1,8 +1,23 @@
 import re
 
 
-def analyze_code(code: str):
+def analyze_code(code: str, language: str):
     issues = []
+
+    if language.lower() == "java":
+        for line_number, line in enumerate(code.splitlines(), start=1):
+            if "System.out.println" in line:
+                issues.append({
+                    "severity": "LOW",
+                    "type": "SYSTEM_OUT",
+                    "line": line_number,
+                    "message": "Avoid using System.out.println() in production code."
+                })
+        pass
+
+    if language.lower() == "python":
+        # for Python
+        pass
 
     pattern = r'(password|secret|api_key|apikey)\s*=\s*["\'][^"\']+["\']'
 

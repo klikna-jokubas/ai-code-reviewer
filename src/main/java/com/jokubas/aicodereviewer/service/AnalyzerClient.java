@@ -12,13 +12,16 @@
             this.restClient = restClient;
         }
 
-        public String analyze(String code) {
-            CodeRequest request = new CodeRequest(code);
+        public ReviewResponse analyze(String code, String language) {
+            CodeRequest request = new CodeRequest(
+                    code,
+                    language
+            );
 
             return restClient.post()
                     .uri("http://localhost:8000/analyze")
                     .body(request)
                     .retrieve()
-                    .body(String.class);
+                    .body(ReviewResponse.class);
         }
     }

@@ -11,7 +11,24 @@ public class ReviewService {
         this.analyzerClient = analyzerClient;
     }
 
-    public String review(String code) {
-        return analyzerClient.analyze(code);
+    public ReviewResponse review(ReviewRequest request) {
+
+        String code = request.code();
+        String language = request.language();
+
+        if (code == null || code.isBlank()) {
+            throw new IllegalArgumentException("Code cannot be null or empty");
+        }
+
+        if (code.length() > 10_000) {
+            throw new IllegalArgumentException("Code is too long");
+        }
+
+        if (!request.language().equalsIgnoreCase("java")
+                && !request.language().equalsIgnoreCase("python")) {
+            throw new IllegalArgumentException("Unsupported language");
+        }
+
+        return analyzerClient.analyze(code, language);
     }
 }

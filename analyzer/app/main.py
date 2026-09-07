@@ -8,6 +8,7 @@ app = FastAPI()
 
 class CodeRequest(BaseModel):
     code: str
+    language: str
 
 
 @app.get("/health")
@@ -17,7 +18,7 @@ def health():
 
 @app.post("/analyze")
 def analyze(request: CodeRequest):
-    issues = analyze_code(request.code)
+    issues = analyze_code(request.code, request.language)
 
     return {
         "issues": issues

@@ -1,5 +1,7 @@
 package com.jokubas.aicodereviewer.controller;
 
+import com.jokubas.aicodereviewer.service.ReviewRequest;
+import com.jokubas.aicodereviewer.service.ReviewResponse;
 import com.jokubas.aicodereviewer.service.ReviewService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +19,7 @@ public class ReviewController {
     }
 
     @PostMapping
-    public String review(@RequestBody String code) {
-        return reviewService.review(code);
+    public ReviewResponse review(@RequestBody ReviewRequest request) {
+        return reviewService.review(request);
     }
 }
