@@ -1,8 +1,13 @@
 import re
+from app.ai_client import analyze_with_ai
 
 
 def analyze_code(code: str, language: str):
     issues = run_rule_checks(code, language)
+
+    ai_result = analyze_with_ai(code, language)
+
+    issues.extend(ai_result["issues"])
 
     return issues
 

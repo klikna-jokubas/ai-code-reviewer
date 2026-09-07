@@ -4,6 +4,7 @@ public record Issue (
     String severity,
     String type,
     Integer line,
-    String message
+    String message,
+    String suggestion
 ){
 }
