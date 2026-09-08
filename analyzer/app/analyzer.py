@@ -18,7 +18,7 @@ def analyze_code(code: str, language: str):
 
     issues.extend(ai_result["issues"])
 
-    return issues
+    return deduplicate_issues(issues)
 
 def run_rule_checks(code: str, language: str):
 
@@ -68,3 +68,22 @@ def run_rule_checks(code: str, language: str):
         })
 
     return issues
+
+def normalize_issue_type(issue_type: str):
+    return issue_type.lower().replace("_", "").replace(" ", "")
+
+def deduplicate_issues(issues):
+    unique_issues = []
+    seen = set()
+
+    for issue in issues:
+        key = (
+            normalize_issue_type(issue["type"]),
+            issue["line"]
+        )
+
+        if key not in seen:
+            seen.add(key)
+            unique_issues.append(issue)
+
+    return unique_issues

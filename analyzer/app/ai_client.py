@@ -30,6 +30,14 @@ and important code-quality problems.
 Only report issues that you have good reason to believe are real.
 Do not invent problems.
 
+Use these issue type names when applicable:
+- HARDCODED_SECRET
+- SQL_INJECTION
+- SYSTEM_OUT
+- INVALID_CODE
+
+If an issue matches one of these categories, use the exact category name instead of creating a new name.
+
 Return every finding with:
 - severity: HIGH, MEDIUM, or LOW
 - type: short issue category
