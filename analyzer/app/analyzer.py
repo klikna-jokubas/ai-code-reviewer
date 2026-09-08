@@ -3,20 +3,24 @@ from app.ai_client import analyze_with_ai
 
 
 def analyze_code(code: str, language: str):
-    ai_result = analyze_with_ai(code, language)
-
-    if not ai_result["is_code"]:
-        return [{
-            "severity": "LOW",
-            "type": "INVALID_CODE",
-            "line": None,
-            "message": f"The provided input does not appear to be valid {language} code.",
-            "suggestion": f"Provide valid {language} source code for review."
-        }]
-
     issues = run_rule_checks(code, language)
 
-    issues.extend(ai_result["issues"])
+    try:
+        ai_result = analyze_with_ai(code, language)
+
+        if not ai_result["is_code"]:
+            return [{
+                "severity": "HIGH",
+                "type": "INVALID_CODE",
+                "line": None,
+                "message": f"The provided input does not appear to be valid {language} code.",
+                "suggestion": f"Provide valid {language} source code for review."
+            }]
+
+        issues.extend(ai_result["issues"])
+
+    except Exception as exception:
+        print(f"An error occurred during AI analysis: {exception}")
 
     return deduplicate_issues(issues)
 
