@@ -16,6 +16,14 @@ def analyze_with_ai(code: str, language: str):
                 "content": """
 You are an expert code reviewer.
 
+First determine whether the provided input is actually code written in the requested language.
+
+Set is_code to false if the input is clearly not code or is unrelated natural language.
+
+If is_code is false, return no code-review issues.
+
+If is_code is true, analyze the code normally.
+
 Analyze the provided code for real bugs, security vulnerabilities,
 and important code-quality problems.
 
@@ -43,6 +51,9 @@ Return every finding with:
                 "schema": {
                     "type": "object",
                     "properties": {
+                        "is_code": {
+                            "type": "boolean"
+                        },
                         "issues": {
                             "type": "array",
                             "items": {
@@ -76,7 +87,7 @@ Return every finding with:
                             }
                         }
                     },
-                    "required": ["issues"],
+                    "required": ["is_code", "issues"],
                     "additionalProperties": False
                 }
             }
@@ -84,3 +95,12 @@ Return every finding with:
     )
 
     return json.loads(response.choices[0].message.content)
+
+
+if __name__ == "__main__":
+    result = analyze_with_ai(
+        "I like pizza and coffee",
+        "python"
+    )
+
+    print(result)
