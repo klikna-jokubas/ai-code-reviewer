@@ -1,0 +1,12 @@
+services:
+  analyzer:
+    build: ./analyzer
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+
+  backend:
+    build: .
+    ports:
+      - "8080:8080"

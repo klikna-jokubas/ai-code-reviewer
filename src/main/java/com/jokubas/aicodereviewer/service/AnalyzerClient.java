@@ -19,7 +19,7 @@
             );
 
             return restClient.post()
-                    .uri("http://localhost:8000/analyze")
+                    .uri("http://analyzer:8000/analyze")
                     .body(request)
                     .retrieve()
                     .body(ReviewResponse.class);
