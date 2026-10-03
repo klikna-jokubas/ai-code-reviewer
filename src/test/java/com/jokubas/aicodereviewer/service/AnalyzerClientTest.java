@@ -23,7 +23,10 @@
 
             RestClient restClient = builder.build();
 
-            AnalyzerClient analyzerClient = new AnalyzerClient(restClient);
+            AnalyzerClient client = new AnalyzerClient(
+                    restClient,
+                    "http://localhost:8000"
+            );
 
             server.expect(requestTo("http://localhost:8000/analyze"))
                     .andExpect(method(HttpMethod.POST))
@@ -47,7 +50,7 @@
                     }
                     """, MediaType.APPLICATION_JSON));
 
-            ReviewResponse result = analyzerClient.analyze(
+            ReviewResponse result = client.analyze(
                     "System.out.println(123);",
                     "java"
             );

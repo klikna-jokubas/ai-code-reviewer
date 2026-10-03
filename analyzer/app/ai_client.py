@@ -1,13 +1,20 @@
 import os
-import json
-
 from groq import Groq
 
 
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+def get_client():
+    return Groq(api_key=os.environ.get("GROQ_API_KEY"))
+
+
+def analyze_with_ai(code):
+    client = get_client()
+
 
 
 def analyze_with_ai(code: str, language: str):
+
+    client = get_client()
+
     response = client.chat.completions.create(
         model="openai/gpt-oss-20b",
         messages=[
